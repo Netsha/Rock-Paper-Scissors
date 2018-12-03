@@ -15,17 +15,7 @@ player2Score = 0
 def menu():
 
     menuSelect = ""
-    print("*** Hello and welcome to Rock, Paper, Scissors! ***")
-
-    #(credits) ASCII rock paper scissors hand signs made by Veronica Karlsson
-    print('''
-        _______	          _______	    	       _______
-    ---'   ____)	    ---'   ____)____	   ---'   ____)____
-          (_____)	              ______)	              ______)
-          (_____)	              _______)           __________)
-          (____)	             _______)	          (____)
-    ---.__(___)	      ---.__________)		    ---.__(___)
-    ''')
+    print("*** Hello and welcome to Rock, Paper, Scissors! ***\n------------")
 
     print('''To select any of the options below, type the number written
            in brackets next to the option.''')
