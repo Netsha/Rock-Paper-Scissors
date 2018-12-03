@@ -1,0 +1,255 @@
+#importing module for randomising computer choices
+import random
+
+#keeping track of scores
+#-------
+#player vs computer
+playerScore = 0
+computerScore = 0
+
+#player vs player
+player1Score = 0
+player2Score = 0
+
+#main menu for the game which includes the game's rules, game mode, and exit
+def menu():
+
+    menuSelect = ""
+    print("*** Hello and welcome to Rock, Paper, Scissors! ***")
+
+    #(credits) ASCII rock paper scissors hand signs made by Veronica Karlsson
+    print('''
+        _______	          _______	    	       _______
+    ---'   ____)	    ---'   ____)____	   ---'   ____)____
+          (_____)	              ______)	              ______)
+          (_____)	              _______)           __________)
+          (____)	             _______)	          (____)
+    ---.__(___)	      ---.__________)		    ---.__(___)
+    ''')
+
+    print('''To select any of the options below, type the number written
+           in brackets next to the option.''')
+    print('''
+ =========================================
+| --> Rules (1)                           |
+| --> Game mode: Player vs. Player (2)    |
+| --> Game mode: Player vs. Computer (3)  |
+| --> Exit (4)                            |
+ =========================================
+        (\__/) ||
+        (•ㅅ•) ||
+        / 　 づ
+\n------------
+    ''')
+
+    while True:
+        menuSelect = int(input("Please select one of the 4 options: "))
+
+        while menuSelect < 1 or menuSelect > 4:
+            print("Please enter a valid option (1-4)")
+            menuSelect = int(input("Please select one of the 4 options: "))
+
+        if menuSelect == 1:
+            rules()
+        elif menuSelect == 2:
+            print("\t***Player vs. Player***")
+            print("(don't look at each other's answers!)")
+            print("------------")
+            PvsP()
+        elif menuSelect == 3:
+            print("\t***Player vs. Computer***")
+            print("(beat the computer!)")
+            print("------------")
+            PvsC()
+        elif menuSelect == 4:
+            end()
+            break #ends the loop
+
+#***GAME RULES***
+def rules():
+        print("\t***Rules***")
+        print("--> rock beats scissors")
+        print("--> paper beats rock")
+        print("--> scissors beat paper\n")
+        print("------------")
+
+#***PLAYER VS PLAYER MODE***
+def PvsP():
+    #player choices
+    player1 = input("'''Player 1''': Input \'rock\', \'paper\' or \'scissors\'")
+    player2 = input("'''Player 2''': Input \'rock\', \'paper\' or \'scissors\'")
+
+#--------------------------------------------------
+    #play again function which loops if input is not yes or no, until yes or no is inputted.
+    def askPlayAgain(prompt=True):
+        if prompt:
+            playAgain = input("Play again? (\'yes\'/\'no\')")
+        else:
+            playAgain = input("Play again?")
+        if playAgain == "yes":
+            return True
+        elif playAgain == "no":
+            return False
+        else:
+            print("please enter \'yes\' or \'no\'\n------------")
+            return askPlayAgain(False)
+
+    def winLose_PvsP():
+        global player1Score, player2Score
+        playAgain = None
+
+        #tie
+        if player1 == player2:
+            print("It's a tie!\n")
+            player1Score += 1
+            player2Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player rock choice
+        elif player1 == "rock" and player2 == "paper":
+            print("Player 2 wins!\n")
+            player2Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+        elif player1 == "rock" and player2 == "scissors":
+            print("Player 1 wins!\n")
+            player1Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player paper choice
+        elif player1 == "paper" and player2 == "scissors":
+            print("Player 2 wins!\n")
+            player2Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+        elif player1 == "paper" and player2 == "rock":
+            print("Player 1 wins!\n")
+            player1Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player scissors choice
+        elif player1 == "scissors" and player2 == "rock":
+            print("Player 2 wins!\n")
+            player2Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+        elif player1 == "scissors" and player2 == "paper":
+            print("Player 1 wins!\n")
+            player1Score += 1
+            print("Player 1:", player1Score, "\nPlayer 2:", player2Score, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player makes typo
+        else:
+            print("There's been an error. Please try again.\n------------")
+            PvsP()
+
+        if playAgain:
+            PvsP()
+    winLose_PvsP()
+
+#***PLAYER VS COMPUTER MODE***
+def PvsC():
+    #player's choice
+    player = input("Input \'rock\', \'paper\' or \'scissors\'")
+
+    #--------------------------------------------------
+
+    #randomized computer decisions
+    computerRandom = random.randint(1,3)
+    computerSign = computerRandom
+    if computerRandom == 1:
+        computerSign = "rock"
+    elif computerRandom == 2:
+        computerSign = "paper"
+    elif computerRandom == 3:
+        computerSign = "scissors"
+
+    def askPlayAgain(prompt=True):
+        if prompt:
+            playAgain = input("Play again? (\'yes\'/\'no\')")
+        else:
+            playAgain = input("Play again?")
+        if playAgain == "yes":
+            return True
+        elif playAgain == "no":
+            return False
+        else:
+            print("please enter \'yes\' or \'no\'\n------------")
+            return askPlayAgain(False)
+
+#outcomes
+    def winLose_PvsC():
+        global playerScore, computerScore
+        playAgain = None
+
+        #tie
+        if player == computerSign:
+            print("It's a tie!\n")
+            playerScore += 1
+            computerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player rock choice
+        elif player == "rock" and computerSign == "paper":
+            print("You lose!\n")
+            computerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+        elif player == "rock" and computerSign == "scissors":
+            print("You win!\n")
+            playerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player paper choice
+        elif player == "paper" and computerSign == "scissors":
+            print("You lose!\n")
+            computerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+        elif player == "paper" and computerSign == "rock":
+            print("You win!\n")
+            playerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player scissors choice
+        elif player == "scissors" and computerSign == "rock":
+            print("You lose!\n")
+            computerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+        elif player == "scissors" and computerSign == "paper":
+            print("You win!\n")
+            playerScore += 1
+            print("Player:", playerScore, "\nComputer:", computerScore, "\n------------")
+            playAgain = askPlayAgain()
+
+        #player makes typo
+        else:
+            print("There's been an error. Please try again.\n------------")
+            PvsC()
+
+        if playAgain:
+            PvsC()
+    winLose_PvsC()
+
+#***END GAME***
+def end():
+    print('''____   ____  ___ ___    ___       ___   __ __    ___  ____  
+            /    | /    ||   |   |  /  _]     /   \ |  |  |  /  _]|    \ 
+           |   __||  o  || _   _ | /  [_     |     ||  |  | /  [_ |  D  )
+           |  |  ||     ||  \_/  ||    _]    |  O  ||  |  ||    _]|    / 
+           |  |_ ||  _  ||   |   ||   [_     |     ||  :  ||   [_ |    \ 
+           |     ||  |  ||   |   ||     |    |     | \   / |     ||  .  \ 
+           |___,_||__|__||___|___||_____|     \___/   \_/  |_____||__|\_|
+           ------------
+           ''')
+    return end
+
+menu()
